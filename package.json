@@ -1,0 +1,54 @@
+{
+  "name": "rado",
+  "version": "1.0.10",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && bun build.ts",
+    "size": "esbuild src/index.ts --bundle --minify --format=esm --outdir=dist",
+    "profile": "PROFILE=true bun build.ts && cd bin && (rimraf CPU*.cpuprofile || true) && node --cpu-prof --cpu-prof-interval=100 test && speedscope CPU*.cpuprofile",
+    "prepublishOnly": "rm -rf dist && bun run build",
+    "cycles": "madge --circular src/index.ts src/sqlite.ts src/mysql.ts src/postgres.ts",
+    "test:bun": "bun test",
+    "test:node": "node --test-force-exit --test-concurrency=1 --import tsx --test \"**/*.test.ts\"",
+    "test:deno": "deno test --no-check -A --unstable-ffi"
+  },
+  "sideEffects": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["./dist/*"]
+    }
+  },
+  "files": ["dist"],
+  "devDependencies": {
+    "@alinea/suite": "^0.4.0",
+    "@biomejs/biome": "^1.8.3",
+    "@cloudflare/workers-types": "^4.20230628.0",
+    "@electric-sql/pglite": "^0.1.5",
+    "@miniflare/d1": "^2.14.2",
+    "@miniflare/shared": "^2.14.2",
+    "@sqlite.org/sqlite-wasm": "^3.42.0-build4",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/bun": "^1.1.8",
+    "@types/glob": "^8.1.0",
+    "@types/pg": "^8.11.8",
+    "@types/sql.js": "^1.4.9",
+    "@vercel/postgres": "^0.10.0",
+    "better-sqlite3": "^11.3.0",
+    "esbuild": "^0.23.1",
+    "glob": "^11.0.0",
+    "madge": "^8.0.0",
+    "mysql2": "^3.11.0",
+    "pg": "^8.12.0",
+    "speedscope": "^1.15.0",
+    "sql.js": "^1.11.0",
+    "sqlite3": "^5.1.7",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.2"
+  }
+}

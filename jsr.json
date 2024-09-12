@@ -1,0 +1,13 @@
+{
+  "name": "@rado/rado",
+  "version": "1.0.10",
+  "publish": {
+    "include": ["README.md", "LICENSE", "src"]
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./sqlite": "./src/sqlite.ts",
+    "./mysql": "./src/mysql.ts",
+    "./postgres": "./src/postgres.ts"
+  }
+}
